@@ -68,3 +68,22 @@ resource "azurerm_resource_group" "ecommerce" {
   name     = "${var.environment}-ecommerce-rg"
   location = var.location
 }
+
+# Notification Module
+module "notification" {
+  source              = "../../modules/notification"
+  namespace_name      = var.notification_namespace_name
+  topic_name          = var.notification_topic_name
+  subscription_name   = var.notification_subscription_name
+  resource_group_name = var.notification_resource_group_name
+  location            = var.notification_location
+  tags                = var.notification_tags
+}
+
+# IAM Module
+module "iam" {
+  source               = "../../modules/iam"
+  principal_id         = var.iam_principal_id
+  role_definition_name = var.iam_role_definition_name
+  scope                = var.iam_scope
+}
